@@ -9,7 +9,7 @@ from email.mime.message import MIMEMessage
 load_dotenv()
 
 remitente = os.getenv('USER')
-destinatario = os.getenv('YURE')
+destinatario = os.getenv('ALEXI')
 asunto = "Mensaje extenso de prueba"
 
 msg = MIMEMultipart()

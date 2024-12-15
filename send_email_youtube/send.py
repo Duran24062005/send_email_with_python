@@ -9,15 +9,18 @@ from email.mime.message import MIMEMessage
 load_dotenv()
 
 remitente = os.getenv('USER')
-destinatario = os.getenv('USER')
-asunto = "Test"
+destinatario = os.getenv('YURE')
+asunto = "Mensaje extenso de prueba"
 
 msg = MIMEMultipart()
 msg['From'] = remitente
 msg['To'] = destinatario
 msg['Subject'] = asunto
 
-with open('C:/Users/HP/OneDrive/Escritorio/Desarrollo/Back-End/send_email/send_email_youtube/templates/index.html', 'r') as archive:
+base_dir = os.path.dirname(os.path.realpath(__file__))
+file = os.path.join(base_dir, 'templates/airpods.html')
+
+with open(file, 'r', encoding='utf-8') as archive:
     contenido = archive.read()
     # body = MIMEText(archive.read(), 'html')
 

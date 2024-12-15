@@ -1,23 +1,33 @@
-<p align="center">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/0/0a/Python.svg" height="96">
+<p align="center"> 
+    <img src="https://upload.wikimedia.org/wikipedia/commons/0/0a/Python.svg" height="96"> 
     <img src="https://www.pngplay.com/wp-content/uploads/6/Red-Email-PNG-Clipart-Background.png" height="96">
-    <h3 align="center">Send Email whith Python - Documentation</h3>
+    <h3 align="center">Send Email with Python - Documentation</h3>
 </p>
 
-<p align="center">Es una aplicación simple en FastAPI desarrolada en un video tutorial de YouTube. <a href="https://www.youtube.com/watch?v=XLD2lqZj27Q&ab_channel=Pildorasdeprogramaci%C3%B3n">YouTube Video Tutorial</a></p>
+<p align="center">Es una aplicación simple en Python con funcionalidades extendidas con FastAPI. Desarrollada en un video tutorial de YouTube. <a href="https://www.youtube.com/watch?v=XLD2lqZj27Q&ab_channel=Pildorasdeprogramaci%C3%B3n">YouTube Video Tutorial</a></p>
 <p> <a href="https://fastapi.tiangolo.com/">FastAPI</a> as the API backend.</p>
 
-# Send Emial's with python
+---
 
-Para automatizar el envío de correos electrónicos múltiples en Python, puedes seguir estos pasos:
+# Send Emails with Python
 
-Preparar el entorno: Asegúrate de tener Python instalado y las bibliotecas necesarias. Puedes usar smtplib para enviar correos y dotenv para manejar variables de entorno (como tus credenciales de correo).
+Para enviar correos electrónicos con Python, se utiliza la biblioteca `smtplib` para manejar el servidor SMTP y `email.mime` para construir el contenido del correo. Aquí te muestro cómo hacerlo:
 
-Crear una lista de destinatarios: Puedes almacenar las direcciones de correo electrónico en una lista o leerlas desde un archivo (como un CSV).
+### Pasos para enviar un correo:
 
-Configurar el correo electrónico: Utiliza un bucle para iterar sobre la lista de destinatarios y enviar un correo a cada uno.
+1. **Configura las variables de entorno:**
+   - Crea un archivo `.env` para guardar tus credenciales (usuario y contraseña del correo) de manera segura.
 
-Ejemplo de código: Aquí tienes un ejemplo básico de cómo hacerlo:
+2. **Prepara el contenido del correo:**
+   - Utiliza `email.mime` para construir el cuerpo y el asunto del mensaje. Puedes adjuntar contenido HTML o texto plano.
+
+3. **Conéctate al servidor SMTP:**
+   - Configura el servidor SMTP (por ejemplo, `smtp.gmail.com` para Gmail) y realiza el inicio de sesión.
+
+4. **Envía el correo:**
+   - Usa `server.sendmail(remitente, destinatario, msg.as_string())`.
+
+### Ejemplo básico:
 
 ```
 import smtplib
@@ -33,16 +43,65 @@ from email.mime.text import MIMEText
 load_dotenv()
 
 remitente = os.getenv('USER')
-asunto = "Asunto del correo"
+destinatario = os.getenv('YURE')
+asunto = "Mensaje extenso de prueba"
 ```
 
-# Lista de destinatarios
+# Crear el mensaje
 
+```
+msg = MIMEMultipart()
+msg['From'] = remitente
+msg['To'] = destinatario
+msg['Subject'] = asunto
+```
+
+# Leer contenido HTML desde un archivo
+
+```
+with open('templates/airpods.html', 'r', encoding='utf-8') as archivo:
+    contenido = archivo.read()
+
+msg.attach(MIMEText(contenido, 'html'))
+```
+
+# Configurar servidor SMTP
+
+```
+server = smtplib.SMTP('smtp.gmail.com', 587)
+server.starttls()
+server.login(remitente, os.getenv('PASSWORD'))
+```
+# Enviar correo
+
+```
+server.sendmail(remitente, destinatario, msg.as_string())
+server.quit()
+```
+
+---
+
+# Automatización del envío de correos
+
+Puedes automatizar el envío de correos electrónicos a múltiples destinatarios o configurar tareas recurrentes. A continuación, se explica cómo hacerlo:
+
+### Pasos para enviar correos a múltiples destinatarios
+
+1. **Crea una lista de destinatarios:**
+   - Puedes almacenarlos en un archivo CSV, una base de datos, o directamente en una lista de Python.
+
+2. **Itera sobre los destinatarios:**
+   - Utiliza un bucle para enviar el correo a cada destinatario.
+
+3. **Agrega una conexión con una base de datos (opcional):**
+   - Usa bibliotecas como `SQLAlchemy` o `sqlite3` para obtener datos directamente de una base de datos.
+
+### Ejemplo para múltiples destinatarios
+
+```python
 destinatarios = ['correo1@example.com', 'correo2@example.com', 'correo3@example.com']
 
-# Configurar el servidor SMTP
-
-```
+# Configurar servidor SMTP
 server = smtplib.SMTP('smtp.gmail.com', 587)
 server.starttls()
 server.login(remitente, os.getenv('PASSWORD'))
@@ -61,17 +120,23 @@ for destinatario in destinatarios:
     # Enviar el correo
     server.sendmail(remitente, destinatario, msg.as_string())
     print(f'Correo enviado a {destinatario}')
-```
-# Cerrar la conexión
 
-```
 server.quit()
 ```
-Consideraciones:
 
-Asegúrate de que tu cuenta de correo permita el acceso a aplicaciones menos seguras si usas Gmail.
-Considera implementar un manejo de errores para gestionar posibles fallos en el envío.
-Si envías muchos correos, verifica las políticas de tu proveedor de correo para evitar ser marcado como spam.
-Automatización: Puedes programar este script para que se ejecute automáticamente usando un cron job en Linux o el Programador de tareas en Windows.
+---
 
-Siguiendo estos pasos, podrás automatizar el envío de correos electrónicos a múltiples destinatarios de manera efectiva.
+# Consideraciones adicionales
+
+- **Seguridad:** Asegúrate de que tus credenciales estén seguras utilizando variables de entorno con `dotenv`.
+- **Manejo de errores:** Implementa excepciones para manejar errores comunes, como fallos en la conexión o destinatarios no válidos.
+- **Automatización:** Usa tareas programadas (como cron jobs en Linux o el Programador de Tareas en Windows) para ejecutar el script periódicamente.
+- **Conexión a una base de datos:** Puedes almacenar y recuperar destinatarios desde una base de datos relacional como MySQL o PostgreSQL.
+
+### Automatización avanzada
+
+Puedes combinar el script con un sistema de backend como FastAPI para que los correos se envíen automáticamente en respuesta a solicitudes o eventos específicos.
+
+---
+
+By: [Alexi Dg](www.linkedin.com/in/alexi-duran-gomez-6b17042a3)

@@ -4,7 +4,9 @@
     <h3 align="center">Send Email with Python - Documentation</h3>
 </p>
 
-<p align="center">Es una aplicación simple en Python con funcionalidades extendidas con FastAPI. Desarrollada en un video tutorial de YouTube. <a href="https://www.youtube.com/watch?v=XLD2lqZj27Q&ab_channel=Pildorasdeprogramaci%C3%B3n">YouTube Video Tutorial</a></p>
+<p align="center">Es una aplicación simple en Python con funcionalidades extendidas con FastAPI. Desarrollada de un video tutorial de YouTube. <a href="https://www.youtube.com/watch?v=XLD2lqZj27Q&ab_channel=Pildorasdeprogramaci%C3%B3n">YouTube Video Tutorial</a></p>
+
+<p> <a href="https://docs.python.org/3.12/">Python</a> Oficial Documentation.</p>
 <p> <a href="https://fastapi.tiangolo.com/">FastAPI</a> as the API backend.</p>
 
 ---
@@ -43,7 +45,7 @@ from email.mime.text import MIMEText
 load_dotenv()
 
 remitente = os.getenv('USER')
-destinatario = os.getenv('YURE')
+destinatario = os.getenv('DESTINATARIO')
 asunto = "Mensaje extenso de prueba"
 ```
 
@@ -139,4 +141,5 @@ Puedes combinar el script con un sistema de backend como FastAPI para que los co
 
 ---
 
-By: [Alexi Dg](www.linkedin.com/in/alexi-duran-gomez-6b17042a3)
+By: [Alexi Dg](www.linkedin.com/in/alexi-duran-gomez-6b17042a3) <br>
+[My personal web](<https://my-web-production-xi.vercel.app/>)

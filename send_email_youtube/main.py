@@ -9,7 +9,7 @@ from email.mime.message import MIMEMessage
 load_dotenv()
 
 remitente = os.getenv('USER')
-destinatario = os.getenv('ALEXI')
+destinatario = os.getenv('JORGE')
 asunto = "Mensaje extenso de prueba"
 
 msg = MIMEMultipart()
@@ -36,5 +36,6 @@ server.starttls()
 server.login(remitente, os.getenv('PASSWORD'))
 # Enviar el correo
 server.sendmail(remitente, destinatario, msg.as_string())
+print(f"El correo, '{asunto}' fue enviando exitosamente a {destinatario}")
 # cerrar la conexión
 server.quit()
